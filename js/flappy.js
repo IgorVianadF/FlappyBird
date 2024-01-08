@@ -43,15 +43,13 @@ function parDeBarreiras(altura, abertura, x){
     this.setX(x)
 }
 
-// const b = new parDeBarreiras(700,200,400)
-// document.querySelector('[wm-flappy]').appendChild(b.elemento)
-
     function Barreiras(altura, largura, abertura, espaco, notificarPonto){
         this.pares = [
             new parDeBarreiras(altura, abertura, largura),
             new parDeBarreiras(altura, abertura, largura + espaco),
             new parDeBarreiras(altura, abertura, largura + espaco *2),
             new parDeBarreiras(altura, abertura, largura + espaco * 3)
+            
         ]
         const deslocamento = 3
         this.animar = ()=>{
@@ -102,20 +100,11 @@ function parDeBarreiras(altura, abertura, x){
         this.elemento = novoElemento('span', 'progresso')
         this.atualizarPontos = pontos =>{
             this.elemento.innerHTML = pontos
+            score.play()
         }
         this.atualizarPontos(0)
     }
-    // const barreiras = new Barreiras(700, 1200, 200, 400)
-    // const passaro = new Passaro(700)
-    // const areaDoJogo = document.querySelector('[wm-flappy]')
-    
-    // areaDoJogo.appendChild(passaro.elemento)
-    // areaDoJogo.appendChild(new Progresso().elemento)
-    // barreiras.pares.forEach(par=>areaDoJogo.appendChild(par.elemento))
-    // setInterval(()=>{
-    //     barreiras.animar()
-    //     passaro.animar()
-    // },20)
+
 
     function estaoSobrepostos(elementoA, elementoB){
         const a = elementoA.getBoundingClientRect()
@@ -157,13 +146,37 @@ function parDeBarreiras(altura, abertura, x){
 
         this.start = ()=>{
             const temporizador = setInterval(()=>{
+                musica.play()
                 barreiras.animar()
                 passaro.animar()
                 if(colidiu(passaro, barreiras)){
                     clearInterval(temporizador)
+                    musica.pause()
+                    over.play()
                 }
             },20)
         }
     }
+
+    //musica/efeitos
+    musica = document.getElementById('musica')
+    over = document.getElementById('over')
+    over.volume = 0.2
+    score = document.getElementById('score')
+
+    som = document.getElementById('som')
+    function alternarSom(){
+        if(musica.muted==false){
+            musica.muted = true
+            som.src= "imgs/semsom.png"
+        } else {
+            musica.muted = false
+            som.src= "imgs/som.png"
+        }
+    }
+    
+
+    //tela retry
+
 
     new FlappyBird().start()

@@ -9,7 +9,18 @@
 
   <body class="conteudo">
     <h1>Flappy Bird</h1>
-    <div wm-flappy></div>
+    <div wm-flappy>
+      <audio id="over" style="display: none">
+        <source src="src/over.mp3" type="audio/mp3" />
+      </audio>
+      <audio id="score" style="display: none">
+        <source src="src/score.mp3" type="audio/mp3" />
+      </audio>
+      <audio id="musica" autoplay loop style="display: none">
+        <source src="src/Flappy Bird Theme Song.mp3" type="audio/mp3" />
+      </audio>
+      <img id="som" src="imgs/som.png" alt="som" onclick="alternarSom()" />
+    </div>
     <script src="js/flappy.js"></script>
   </body>
 </html>
